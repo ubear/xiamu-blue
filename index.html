@@ -3,280 +3,363 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>夏木之洲</title>
+<title>夏木之洲 · 双子座 · 六月生</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-  :root {
-    --blue-deep: #1a2a4a;
-    --blue-mid: #2c4a7c;
-    --blue-light: #5b7db5;
-    --blue-sky: #8fbbd9;
-    --blue-ice: #c5dbe8;
-    --blue-mist: #e8f0f6;
-    --bg: #f5f7fa;
-    --text: #1a2a4a;
-    --text-light: #5b6b8a;
-    --gold: #c9a84c;
+  :root{
+    --blue-deep:#1a2a4a;
+    --blue-mid:#2c4a7c;
+    --blue-light:#5b7db5;
+    --blue-sky:#8fbbd9;
+    --blue-ice:#c5dbe8;
+    --blue-mist:#e8f0f6;
+    --bg:#f5f7fa;
+    --text:#1a2a4a;
+    --text-light:#5b6b8a;
+    --gold:#c9a84c;
+    --gold-light:#e8d48b;
   }
 
-  html { scroll-behavior: smooth; }
+  html{scroll-behavior:smooth;}
 
-  body {
-    font-family: 'Noto Sans SC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    overflow-x: hidden;
+  body{
+    font-family:'Noto Sans SC',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    overflow-x:hidden;
   }
 
-  /* ===== HERO ===== */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 40%, var(--blue-light) 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem;
-    overflow: hidden;
+  /* === CANVAS OVERLAY === */
+  #petal-canvas{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:9998;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+  /* === HERO === */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    background:linear-gradient(135deg,var(--blue-deep)0%,var(--blue-mid)40%,var(--blue-light)100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:2rem;overflow:hidden;
+  }
+
+  .hero::before{
+    content:'';
+    position:absolute;inset:0;
     background:
-      radial-gradient(ellipse at 20% 50%, rgba(143,187,217,0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 30%, rgba(201,168,76,0.08) 0%, transparent 50%);
-    pointer-events: none;
+      radial-gradient(ellipse at 20% 50%,rgba(143,187,217,0.2)0%,transparent 50%),
+      radial-gradient(ellipse at 80% 30%,rgba(201,168,76,0.12)0%,transparent 50%);
+    pointer-events:none;
   }
 
-  .hero-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(2.8rem, 8vw, 5rem);
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.15em;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 1;
+  .hero-title{
+    font-family:'Noto Serif SC',serif;
+    font-size:clamp(2.8rem,8vw,5rem);font-weight:700;
+    color:#fff;letter-spacing:0.15em;
+    text-shadow:0 2px 30px rgba(0,0,0,0.4);
+    position:relative;z-index:1;opacity:0;transform:translateY(30px);
+    animation:hero-in 1.2s ease-out 0.3s forwards;
   }
 
-  .hero-sub {
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    color: var(--blue-ice);
-    margin-top: 1.2rem;
-    letter-spacing: 0.5em;
-    font-weight: 300;
-    position: relative;
-    z-index: 1;
+  .hero-sub{
+    font-size:clamp(1rem,2.5vw,1.4rem);color:var(--blue-ice);
+    margin-top:1.2rem;letter-spacing:0.5em;font-weight:300;
+    position:relative;z-index:1;opacity:0;
+    animation:hero-in 1s ease-out 0.8s forwards;
   }
 
-  .hero-poem {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    color: var(--gold);
-    margin-top: 2.5rem;
-    opacity: 0.9;
-    position: relative;
-    z-index: 1;
+  .hero-poem{
+    font-family:'Noto Serif SC',serif;
+    font-size:clamp(1.1rem,2.5vw,1.5rem);color:var(--gold);
+    margin-top:2.5rem;opacity:0;
+    position:relative;z-index:1;
+    min-height:2.2em;
   }
 
-  .hero-scroll {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--blue-ice);
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    animation: bounce-down 2s infinite;
-    cursor: pointer;
-    z-index: 1;
+  .hero-poem .cursor{
+    display:inline-block;width:2px;height:1.2em;
+    background:var(--gold);margin-left:2px;
+    animation:blink 0.8s infinite;
+    vertical-align:text-bottom;
   }
 
-  @keyframes bounce-down {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  @keyframes hero-in{
+    to{opacity:1;transform:translateY(0)}
   }
 
-  /* ===== SECTION ===== */
-  .section {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 5rem 2rem;
+  .hero-scroll{
+    position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+    color:var(--blue-ice);font-size:0.85rem;letter-spacing:0.2em;
+    animation:bounce-down 2s infinite;cursor:pointer;z-index:1;
+    opacity:0;transition:opacity 0.5s;
+  }
+  .hero-scroll.show{opacity:1;}
+
+  @keyframes bounce-down{
+    0%,100%{transform:translateX(-50%) translateY(0);}
+    50%{transform:translateX(-50%) translateY(8px);}
   }
 
-  .section-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 0.8rem;
-    color: var(--blue-deep);
+  /* === BIRTHDAY OVERLAY === */
+  .overlay{
+    position:fixed;inset:0;z-index:9999;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;
+    transition:opacity 0.6s;
+    background:rgba(26,42,74,0.7);
+    backdrop-filter:blur(8px);
+  }
+  .overlay.active{opacity:1;pointer-events:auto;}
+
+  .birthday-card{
+    background:linear-gradient(145deg,#fff,var(--blue-mist));
+    border-radius:24px;padding:3rem 2.5rem;
+    max-width:460px;width:90%;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    transform:scale(0.85) translateY(30px);
+    transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    position:relative;
+  }
+  .overlay.active .birthday-card{
+    transform:scale(1) translateY(0);
   }
 
-  .section-sub {
-    text-align: center;
-    color: var(--text-light);
-    font-size: 0.95rem;
-    margin-bottom: 3rem;
-    font-weight: 300;
+  .birthday-card .emoji-deco{
+    font-size:2.5rem;margin-bottom:0.5rem;
+    animation:float 3s ease-in-out infinite;
   }
 
-  .divider {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 0 auto 3rem;
+  @keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
   }
 
-  /* ===== TIMELINE ===== */
-  .timeline {
-    position: relative;
-    padding-left: 2rem;
+  .birthday-card h2{
+    font-family:'Noto Serif SC',serif;
+    font-size:1.8rem;color:var(--blue-deep);margin-bottom:0.3rem;
   }
 
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(180deg, var(--blue-light), var(--blue-ice), transparent);
+  .birthday-card .sub{
+    font-size:1rem;color:var(--text-light);margin-bottom:1.5rem;
+    letter-spacing:0.3em;
   }
 
-  .milestone {
-    position: relative;
-    margin-bottom: 3.5rem;
-    padding-left: 2rem;
+  .birthday-card .countdown{
+    font-size:0.95rem;color:var(--blue-mid);
+    background:var(--blue-ice);padding:0.8rem 1.5rem;
+    border-radius:12px;display:inline-block;margin-bottom:1.5rem;
+    font-weight:500;
   }
 
-  .milestone::before {
-    content: '🌳';
-    position: absolute;
-    left: -9px;
-    top: 0;
-    font-size: 1.2rem;
-    background: var(--bg);
-    padding: 0 4px;
+  .birthday-card .countdown span{
+    color:var(--gold);font-weight:700;
   }
 
-  .milestone-city {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--blue-mid);
-    margin-bottom: 0.3rem;
+  .birthday-card .message{
+    font-size:0.9rem;color:var(--text-light);line-height:1.8;
+    margin-bottom:1.5rem;
   }
 
-  .milestone-date {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    margin-bottom: 0.8rem;
+  .birthday-card .close-btn{
+    display:inline-block;
+    background:linear-gradient(135deg,var(--blue-mid),var(--blue-light));
+    color:#fff;border:none;padding:0.7rem 2rem;
+    border-radius:30px;font-size:0.9rem;cursor:pointer;
+    transition:transform 0.2s,box-shadow 0.2s;
+    font-family:'Noto Sans SC',sans-serif;
+  }
+  .birthday-card .close-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(44,74,124,0.3);
   }
 
-  .milestone-desc {
-    font-size: 0.95rem;
-    color: var(--text);
-    line-height: 1.8;
+  /* small sparkles inside card (css only) */
+  .sparkle-wrapper{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:24px;}
+  .spark{position:absolute;width:6px;height:6px;border-radius:50%;
+    background:var(--gold);opacity:0;animation:sparkle 2s ease-out infinite;}
+  .spark:nth-child(1){top:15%;left:10%;animation-delay:0s;}
+  .spark:nth-child(2){top:25%;right:15%;animation-delay:0.4s;}
+  .spark:nth-child(3){bottom:30%;left:20%;animation-delay:0.8s;}
+  .spark:nth-child(4){bottom:20%;right:10%;animation-delay:1.2s;}
+  .spark:nth-child(5){top:50%;left:85%;animation-delay:0.6s;}
+
+  @keyframes sparkle{
+    0%{opacity:0;transform:scale(0)}
+    30%{opacity:1;transform:scale(1)}
+    70%{opacity:0.8;transform:scale(0.8)}
+    100%{opacity:0;transform:scale(0) translateY(-20px)}
   }
 
-  .milestone-photo {
-    margin-top: 1rem;
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--blue-ice);
-    aspect-ratio: 4/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-light);
-    font-size: 0.9rem;
-    border: 1px dashed var(--blue-light);
-    position: relative;
+  /* === SECTIONS === */
+  .section{
+    max-width:900px;margin:0 auto;padding:5rem 2rem;
   }
 
-  .milestone-photo .placeholder-icon {
-    font-size: 2.5rem;
-    opacity: 0.4;
-    margin-bottom: 0.5rem;
+  .section-title{
+    font-family:'Noto Serif SC',serif;font-size:1.8rem;
+    text-align:center;margin-bottom:0.8rem;color:var(--blue-deep);
   }
 
-  .milestone-photo .placeholder-text {
-    opacity: 0.5;
-    font-size: 0.85rem;
+  .section-sub{
+    text-align:center;color:var(--text-light);
+    font-size:0.95rem;margin-bottom:3rem;font-weight:300;
   }
 
-  /* ===== QUOTE ===== */
-  .quote-section {
-    background: linear-gradient(135deg, var(--blue-mist) 0%, #fff 100%);
-    padding: 4rem 2rem;
-    text-align: center;
+  .divider{
+    width:60px;height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:0 auto 3rem;
   }
 
-  .quote-section blockquote {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--blue-deep);
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 2;
-    font-weight: 400;
+  /* === TIMELINE === */
+  .timeline{
+    position:relative;padding-left:2rem;
   }
 
-  .quote-section cite {
-    display: block;
-    margin-top: 1.5rem;
-    font-size: 0.95rem;
-    color: var(--text-light);
-    font-style: normal;
+  .timeline::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;
+    width:2px;
+    background:linear-gradient(180deg,var(--blue-light),var(--blue-ice),transparent);
   }
 
-  /* ===== EASTER EGG ===== */
-  .easter-egg {
-    text-align: center;
-    padding: 3rem 2rem;
-    font-size: 1rem;
-    color: var(--text-light);
-    opacity: 0.5;
-    transition: opacity 0.3s;
-    cursor: default;
-    user-select: none;
+  .milestone{
+    position:relative;margin-bottom:3.5rem;padding-left:2rem;
+    opacity:0;transform:translateY(40px);
+    transition:opacity 0.8s ease-out,transform 0.8s ease-out;
   }
 
-  .easter-egg:hover { opacity: 0.8; }
-
-  /* ===== FOOTER ===== */
-  footer {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--text-light);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--blue-ice);
+  .milestone.visible{
+    opacity:1;transform:translateY(0);
   }
 
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 600px) {
-    .section { padding: 3rem 1.5rem; }
-    .timeline { padding-left: 1.5rem; }
-    .milestone { padding-left: 1.5rem; }
+  .milestone::before{
+    content:'🌳';position:absolute;left:-9px;top:0;
+    font-size:1.2rem;background:var(--bg);padding:0 4px;
+    transition:transform 0.3s;
+  }
+
+  .milestone.visible::before{
+    animation:tree-pop 0.5s ease-out;
+  }
+
+  @keyframes tree-pop{
+    0%{transform:scale(0)}
+    60%{transform:scale(1.3)}
+    100%{transform:scale(1)}
+  }
+
+  .milestone-city{
+    font-family:'Noto Serif SC',serif;font-size:1.3rem;
+    font-weight:600;color:var(--blue-mid);margin-bottom:0.3rem;
+  }
+
+  .milestone-date{
+    font-size:0.85rem;color:var(--text-light);margin-bottom:0.8rem;
+  }
+
+  .milestone-desc{
+    font-size:0.95rem;color:var(--text);line-height:1.8;
+  }
+
+  .milestone-photo{
+    margin-top:1rem;border-radius:12px;overflow:hidden;
+    background:var(--blue-ice);
+    aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-light);font-size:0.9rem;
+    border:1px dashed var(--blue-light);position:relative;
+    cursor:pointer;transition:border-color 0.3s,background 0.3s;
+  }
+  .milestone-photo:hover{
+    border-color:var(--gold);background:var(--blue-mist);
+  }
+
+  .milestone-photo .placeholder-icon{font-size:2.5rem;opacity:0.4;margin-bottom:0.5rem;}
+  .milestone-photo .placeholder-text{opacity:0.5;font-size:0.85rem;}
+
+  /* === QUOTE === */
+  .quote-section{
+    background:linear-gradient(135deg,var(--blue-mist)0%,#fff 100%);
+    padding:4rem 2rem;text-align:center;
+  }
+
+  .quote-section blockquote{
+    font-family:'Noto Serif SC',serif;
+    font-size:clamp(1.2rem,3vw,1.8rem);
+    color:var(--blue-deep);max-width:700px;margin:0 auto;
+    line-height:2;font-weight:400;
+  }
+
+  .quote-section cite{
+    display:block;margin-top:1.5rem;font-size:0.95rem;
+    color:var(--text-light);font-style:normal;
+  }
+
+  /* === EASTER EGG === */
+  .easter-egg{
+    text-align:center;padding:3rem 2rem;
+    font-size:1rem;color:var(--text-light);
+    opacity:0.4;transition:opacity 0.3s;cursor:default;user-select:none;
+  }
+  .easter-egg:hover{opacity:0.8;}
+
+  /* === FOOTER === */
+  footer{
+    text-align:center;padding:3rem 2rem;
+    color:var(--text-light);font-size:0.85rem;
+    border-top:1px solid var(--blue-ice);
+  }
+
+  /* === RESPONSIVE === */
+  @media(max-width:600px){
+    .section{padding:3rem 1.5rem;}
+    .timeline{padding-left:1.5rem;}
+    .milestone{padding-left:1.5rem;}
+    .birthday-card{padding:2rem 1.5rem;}
   }
 </style>
 </head>
 <body>
 
+<canvas id="petal-canvas"></canvas>
+
+<div class="overlay" id="birthdayOverlay">
+  <div class="birthday-card">
+    <div class="sparkle-wrapper">
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+      <div class="spark"></div>
+    </div>
+    <div class="emoji-deco">🎂🌿✨</div>
+    <h2>双子座 · 六月生</h2>
+    <p class="sub">夏木之洲 · 生日快乐</p>
+    <div class="countdown">
+      🎈 倒计时 <span id="countdownDisplay">--</span>
+    </div>
+    <p class="message">
+      南国花似锦，且赠北国春。<br>
+      愿每一座城都开出花来。
+    </p>
+    <button class="close-btn" onclick="closeOverlay()">打开这份心意 →</button>
+  </div>
+</div>
+
 <!-- ===== HERO ===== -->
 <section class="hero">
   <h1 class="hero-title">夏木之洲</h1>
   <p class="hero-sub">南国有木 · 其名为夏</p>
-  <p class="hero-poem">南国花似锦，且赠北国春。</p>
-  <div class="hero-scroll" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">
+  <p class="hero-poem" id="typewriter"></p>
+  <div class="hero-scroll" id="scrollBtn" onclick="document.getElementById('journey').scrollIntoView({behavior:'smooth'})">
     ▼ 她的旅程
   </div>
 </section>
@@ -286,87 +369,41 @@
   <h2 class="section-title">走过的路</h2>
   <p class="section-sub">每一座城，都是一棵开花的树</p>
   <div class="divider"></div>
-
   <div class="timeline">
 
-    <!-- 昆明 -->
     <div class="milestone">
       <div class="milestone-city">🌸 昆明</div>
       <div class="milestone-date">2025 年 4 月</div>
-      <div class="milestone-desc">
-        落地彩云之南，逛书店、喝东西、闲逛。<br>
-        她说："太好逛了，好舒服惬意。"
-      </div>
-      <div class="milestone-photo">
-        <div>
-          <div class="placeholder-icon">🌤️</div>
-          <div class="placeholder-text">［等你放入昆明照片］</div>
-        </div>
-      </div>
+      <div class="milestone-desc">落地彩云之南，逛书店、喝东西、闲逛。<br>她说："太好逛了，好舒服惬意。"</div>
+      <div class="milestone-photo"><div><div class="placeholder-icon">🌤️</div><div class="placeholder-text">［等你放入昆明照片］</div></div></div>
     </div>
 
-    <!-- 滇池 -->
     <div class="milestone">
       <div class="milestone-city">🛶 滇池</div>
       <div class="milestone-date">2025 年 4 月</div>
-      <div class="milestone-desc">
-        早起划船一小时，海鸥飞在湖面。<br>
-        她说："缺一个陪伴的人。"<br>
-        他说："芙蓉出水天边秀，翠黛修眉云外横。"
-      </div>
-      <div class="milestone-photo">
-        <div>
-          <div class="placeholder-icon">🌊</div>
-          <div class="placeholder-text">［等你放入滇池照片］</div>
-        </div>
-      </div>
+      <div class="milestone-desc">早起划船一小时，海鸥飞在湖面。<br>她说："缺一个陪伴的人。"<br>他说："芙蓉出水天边秀，翠黛修眉云外横。"</div>
+      <div class="milestone-photo"><div><div class="placeholder-icon">🌊</div><div class="placeholder-text">［等你放入滇池照片］</div></div></div>
     </div>
 
-    <!-- 普洱 -->
     <div class="milestone">
       <div class="milestone-city">🌴 普洱</div>
       <div class="milestone-date">2025 年 4 月</div>
-      <div class="milestone-desc">
-        从春天一秒入夏，30 度的热带。<br>
-        她说"适合旅居"，他说"未来可以考虑那边定居"。
-      </div>
-      <div class="milestone-photo">
-        <div>
-          <div class="placeholder-icon">☀️</div>
-          <div class="placeholder-text">［等你放入普洱照片］</div>
-        </div>
-      </div>
+      <div class="milestone-desc">从春天一秒入夏，30 度的热带。<br>她说"适合旅居"，他说"未来可以考虑那边定居"。</div>
+      <div class="milestone-photo"><div><div class="placeholder-icon">☀️</div><div class="placeholder-text">［等你放入普洱照片］</div></div></div>
     </div>
 
-    <!-- 大同（预备） -->
     <div class="milestone">
       <div class="milestone-city">🏛️ 大同</div>
       <div class="milestone-date">2025 年 5 月</div>
-      <div class="milestone-desc">
-        云冈石窟、应县木塔。<br>
-        她说想去看古建，然后真的去了。
-      </div>
-      <div class="milestone-photo">
-        <div>
-          <div class="placeholder-icon">🏯</div>
-          <div class="placeholder-text">［等你放入大同照片］</div>
-        </div>
-      </div>
+      <div class="milestone-desc">云冈石窟、应县木塔。<br>她说想去看古建，然后真的去了。</div>
+      <div class="milestone-photo"><div><div class="placeholder-icon">🏯</div><div class="placeholder-text">［等你放入大同照片］</div></div></div>
     </div>
 
-    <!-- 福州（预备） -->
     <div class="milestone">
       <div class="milestone-city">🏝️ 福州 · 厦门 · 武夷山</div>
       <div class="milestone-date">2025 年 5 月</div>
-      <div class="milestone-desc">
-        下一站，山海之间。
-      </div>
-      <div class="milestone-photo">
-        <div>
-          <div class="placeholder-icon">🌅</div>
-          <div class="placeholder-text">［等地照片来后填充］</div>
-        </div>
-      </div>
+      <div class="milestone-desc">下一站，山海之间。</div>
+      <div class="milestone-photo"><div><div class="placeholder-icon">🌅</div><div class="placeholder-text">［等地照片来后填充］</div></div></div>
     </div>
 
   </div>
@@ -374,26 +411,237 @@
 
 <!-- ===== QUOTE ===== -->
 <section class="quote-section">
-  <blockquote>
-    "江南无所有，聊赠一枝春。"
-    <cite>—— 陆凯《赠范晔》</cite>
-  </blockquote>
-  <blockquote style="margin-top:2rem; font-size:clamp(1rem,2.5vw,1.4rem);">
-    "南国花似锦，且赠北国春。"
-    <cite>—— 得鹿梦鱼 · 赠夏木</cite>
+  <blockquote>"江南无所有，聊赠一枝春。"<cite>—— 陆凯《赠范晔》</cite></blockquote>
+  <blockquote style="margin-top:2rem;font-size:clamp(1rem,2.5vw,1.4rem);">
+    "南国花似锦，且赠北国春。"<cite>—— 得鹿梦鱼 · 赠夏木</cite>
   </blockquote>
 </section>
 
 <!-- ===== EASTER EGG ===== -->
-<div class="easter-egg">
-  🐟🦞🦀 · 小团子 & 木婉清 · 抱团取暖
-</div>
+<div class="easter-egg">🐟🦞🦀 · 小团子 & 木婉清 · 抱团取暖</div>
 
 <!-- ===== FOOTER ===== -->
 <footer>
   <span style="color:var(--blue-light);">✦</span> 双子座 · 六月生 · 蓝色是她的颜色 <span style="color:var(--blue-light);">✦</span><br>
-  <span style="font-size:0.75rem; margin-top:0.5rem; display:inline-block;">xiamu.blue &nbsp;·&nbsp; 2025</span>
+  <span style="font-size:0.75rem;margin-top:0.5rem;display:inline-block;">xiamu.blue &nbsp;·&nbsp; 2025</span>
 </footer>
 
+<script>
+(function(){
+  'use strict';
+
+  // ===== 1. COUNTDOWN =====
+  function updateCountdown(){
+    const el=document.getElementById('countdownDisplay');
+    if(!el)return;
+    const now=new Date();
+    // 注意：6月12日，用户的描述是农历还是公历？聊天中她说"612"——按6月12日算
+    // her birthday is June 12
+    const target=new Date(now.getFullYear(),5,12);
+    if(now>target)target.setFullYear(target.getFullYear()+1);
+    const diff=target-now;
+    if(diff<=0){el.textContent='🎉 就是今天！';return;}
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor((diff%86400000)/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    el.textContent=`${d} 天 ${h} 时 ${m} 分 ${s} 秒`;
+  }
+  updateCountdown();
+  setInterval(updateCountdown,1000);
+
+  // ===== 2. PETAL CANVAS (撒花) =====
+  const canvas=document.getElementById('petal-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,petals=[];
+  const petalCount=80;
+  const PETAL_COLORS=[
+    'rgba(201,168,76,0.6)',   // gold
+    'rgba(232,212,139,0.5)',  // gold light
+    'rgba(197,219,232,0.5)',  // blue-ice
+    'rgba(143,187,217,0.4)',  // blue-sky
+    'rgba(255,255,255,0.3)',  // white
+    'rgba(201,168,76,0.3)',
+  ];
+
+  function resizeCanvas(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+  window.addEventListener('resize',resizeCanvas);
+  resizeCanvas();
+
+  class Petal{
+    constructor(){this.reset(true);}
+    reset(init=false){
+      this.x=Math.random()*W;
+      this.y=init?Math.random()*H:-20-Math.random()*80;
+      this.size=8+Math.random()*14;
+      this.rotation=Math.random()*Math.PI*2;
+      this.rotSpeed=(Math.random()-0.5)*0.02;
+      this.speedY=0.4+Math.random()*0.8;
+      this.speedX=(Math.random()-0.5)*0.5;
+      this.wobble=Math.random()*Math.PI*2;
+      this.wobbleSpeed=0.01+Math.random()*0.02;
+      this.wobbleAmp=0.3+Math.random()*0.8;
+      this.color=PETAL_COLORS[Math.floor(Math.random()*PETAL_COLORS.length)];
+      this.opacity=0.4+Math.random()*0.5;
+      this.shape=Math.floor(Math.random()*3); // 0/1/2 different petal shapes
+    }
+    update(){
+      this.wobble+=this.wobbleSpeed;
+      this.x+=this.speedX+Math.sin(this.wobble)*this.wobbleAmp;
+      this.y+=this.speedY;
+      this.rotation+=this.rotSpeed;
+      if(this.y>H+30 || this.x<-30 || this.x>W+30) this.reset();
+    }
+    draw(){
+      ctx.save();
+      ctx.translate(this.x,this.y);
+      ctx.rotate(this.rotation);
+      ctx.globalAlpha=this.opacity;
+      ctx.fillStyle=this.color;
+      // petal shape
+      const s=this.size;
+      ctx.beginPath();
+      if(this.shape===0){
+        // teardrop petal
+        ctx.moveTo(0,-s);
+        ctx.bezierCurveTo(s,-s*0.3,s*0.3,s*0.6,0,s);
+        ctx.bezierCurveTo(-s*0.3,s*0.6,-s,-s*0.3,0,-s);
+      }else if(this.shape===1){
+        // round petal
+        ctx.ellipse(0,0,s*0.8,s*0.5,0,0,Math.PI*2);
+      }else{
+        // pointed petal
+        ctx.moveTo(0,-s);
+        ctx.quadraticCurveTo(s*0.7,-s*0.2,s*0.4,s*0.6);
+        ctx.quadraticCurveTo(0,s*0.9,-s*0.4,s*0.6);
+        ctx.quadraticCurveTo(-s*0.7,-s*0.2,0,-s);
+      }
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  for(let i=0;i<petalCount;i++){petals.push(new Petal());}
+
+  function animatePetal(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of petals){p.update();p.draw();}
+    requestAnimationFrame(animatePetal);
+  }
+  animatePetal();
+
+  // ===== 3. TYPEWRITER (打字机诗) =====
+  (function typewriter(){
+    const el=document.getElementById('typewriter');
+    const poem='南国花似锦，且赠北国春。';
+    let idx=0;
+    function type(){
+      if(idx<=poem.length){
+        el.innerHTML=poem.slice(0,idx)+(idx<poem.length?'<span class="cursor">|</span>':'');
+        idx++;
+        if(idx<=poem.length) setTimeout(type,80+Math.random()*60);
+        else{
+          // blink cursor fades after last char
+          setTimeout(()=>{
+            const c=el.querySelector('.cursor');
+            if(c){c.style.transition='opacity 0.5s';c.style.opacity='0';}
+          },1500);
+        }
+      }
+    }
+    // start typing after hero animation
+    setTimeout(type,1200);
+  })();
+
+  // ===== 4. BIRTHDAY OVERLAY =====
+  window.closeOverlay=function(){
+    const ov=document.getElementById('birthdayOverlay');
+    ov.classList.remove('active');
+  };
+
+  // show overlay after petals start + typewriter settles
+  setTimeout(()=>{
+    document.getElementById('birthdayOverlay').classList.add('active');
+  },3500);
+
+  // click outside card to close
+  document.getElementById('birthdayOverlay').addEventListener('click',function(e){
+    if(e.target===this)this.classList.remove('active');
+  });
+
+  // show scroll hint after overlay closes
+  const scrollBtn=document.getElementById('scrollBtn');
+  function showScrollBtn(){
+    if(!document.getElementById('birthdayOverlay').classList.contains('active')){
+      scrollBtn.classList.add('show');
+    }
+  }
+  // check periodically
+  setInterval(()=>{
+    if(!document.getElementById('birthdayOverlay').classList.contains('active')){
+      scrollBtn.classList.add('show');
+    }
+  },500);
+
+  // ===== 5. SCROLL ANIMATION (滚动触发节点动画) =====
+  const observer=new IntersectionObserver((entries)=>{
+    for(const e of entries){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        // optional: stop observing so visible stays
+        // but we keep it so it works
+      }
+    }
+  },{threshold:0.15});
+
+  document.querySelectorAll('.milestone').forEach(el=>observer.observe(el));
+  // also observe quote and easter egg for later
+  document.querySelectorAll('.quote-section,.easter-egg,footer').forEach(el=>{
+    observer.observe(el);
+  });
+
+  // ===== 6. RIPPLE ON CLICK (点击金色涟漪) =====
+  document.addEventListener('click',function(e){
+    // skip if clicking overlay or card
+    if(e.target.closest('.overlay'))return;
+
+    const ripple=document.createElement('div');
+    ripple.style.cssText=`
+      position:fixed;pointer-events:none;z-index:9997;
+      left:${e.clientX}px;top:${e.clientY}px;
+      width:0;height:0;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(201,168,76,0.4),transparent 60%);
+      transform:translate(-50%,-50%);
+      animation:ripple-out 0.8s ease-out forwards;
+    `;
+    // inject keyframes if not already
+    if(!document.getElementById('ripple-style')){
+      const style=document.createElement('style');
+      style.id='ripple-style';
+      style.textContent=`
+        @keyframes ripple-out{
+          0%{width:0;height:0;opacity:1}
+          100%{width:300px;height:300px;opacity:0}
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    document.body.appendChild(ripple);
+    setTimeout(()=>ripple.remove(),900);
+  });
+
+  // ===== 7. PHOTO PLACEHOLDER CLICK PREVIEW =====
+  document.querySelectorAll('.milestone-photo').forEach(el=>{
+    el.addEventListener('click',function(){
+      alert('📷 等夏木的照片来了，这里会亮起来 ✨');
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
